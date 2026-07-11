@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Открываем Happ…</title>
+</head>
+<body>
+  <p>Открываем приложение Happ…</p>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const target = params.get("u");
+    if (target) {
+      window.location.href = target;
+    }
+  </script>
+</body>
+</html>
