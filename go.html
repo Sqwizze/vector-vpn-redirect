@@ -2,15 +2,31 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Открываем VPN клиент…</title>
+  <title>Открываем приложение…</title>
 </head>
 <body>
-  <p>Открываем клиент…</p>
+  <p>Открываем приложение…</p>
+  <p><a id="manualLink" href="#">Нажмите здесь, если приложение не открылось автоматически</a></p>
   <script>
+    function isAndroid() {
+      return /android/i.test(navigator.userAgent);
+    }
+
+    function toIntentUrl(schemeUrl) {
+      const match = schemeUrl.match(/^([a-zA-Z0-9+.-]+):\/\/(.*)$/);
+      if (!match) return schemeUrl;
+      const scheme = match[1];
+      const rest = match[2];
+      return `intent://${rest}#Intent;scheme=${scheme};end`;
+    }
+
     const params = new URLSearchParams(window.location.search);
     const target = params.get("u");
+
     if (target) {
-      window.location.href = target;
+      const finalUrl = isAndroid() ? toIntentUrl(target) : target;
+      document.getElementById("manualLink").href = finalUrl;
+      window.location.href = finalUrl;
     }
   </script>
 </body>
